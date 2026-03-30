@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "rabbit-ai": {
+      "type": "sse",
+      "url": "https://rabbitai-lab.iapp.link/mcp",
+      "headers": {
+        "Authorization": "Bearer ${API_KEY}",
+        "projects":""
+      }
+    }
+  }
+}

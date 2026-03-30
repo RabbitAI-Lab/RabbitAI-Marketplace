@@ -8,5 +8,6 @@
   "homepage": "https://github.com/RabbitAI-Lab/RabbitAI-Marketplace",
   "repository": "https://github.com/RabbitAI-Lab/RabbitAI-Marketplace",
   "license": "MIT",
-  "keywords": ["rabbitai", "ai", "development", "tools"]
+  "keywords": ["rabbitai", "ai", "development", "tools"],
+  "mcpServers": "./.mcp.json"
 }

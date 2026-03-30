@@ -10,8 +10,8 @@
   "license": "MIT",
   "keywords": ["rabbitai", "ai", "development", "tools"],
   "category": "developer-tools",
-  "commands": ["./commands"],
-  "agents": ["./agents"],
+  "commands": [],
+  "agents": [],
   "hooks": {
   },
   "mcpServers": {

@@ -1,0 +1,35 @@
+{
+  "name": "rabbitai-marketplace",
+  "owner": {
+    "name": "RabbitAI Lab"
+  },
+  "metadata": {
+    "description": "RabbitAI Lab official Plugin Marketplace - high-quality tools and skill extensions for Claude Code",
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "rabbitai-lab-plugin",
+      "source": "rabbitai-lab-plugin",
+      "description": "RabbitAI Lab official plugin - AI-powered development tools for Claude Code",
+      "version": "1.0.0",
+      "author": {
+        "name": "RabbitAI Lab"
+      },
+      "homepage": "https://github.com/RabbitAI-Lab/RabbitAI-Marketplace",
+      "repository": "https://github.com/RabbitAI-Lab/RabbitAI-Marketplace",
+      "license": "MIT",
+      "keywords": ["rabbitai", "ai", "development", "tools"],
+      "category": "developer-tools",
+      "commands": ["./commands"],
+      "agents": ["./agents"],
+      "hooks": {
+      },
+      "mcpServers": {
+      },
+      "lspServers": {
+      }
+    }
+  ]
+}

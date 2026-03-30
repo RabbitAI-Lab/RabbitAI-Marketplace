@@ -1,0 +1,99 @@
+name: Validate Marketplace
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.claude-plugin/marketplace.json'
+      - 'plugins/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.claude-plugin/marketplace.json'
+      - 'plugins/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate marketplace.json
+        run: |
+          MARKETPLACE_FILE=".claude-plugin/marketplace.json"
+
+          # Check file exists
+          if [ ! -f "$MARKETPLACE_FILE" ]; then
+            echo "ERROR: $MARKETPLACE_FILE not found"
+            exit 1
+          fi
+
+          # Validate JSON syntax
+          if ! python3 -c "import json, sys; json.load(open('$MARKETPLACE_FILE'))" 2>/dev/null; then
+            echo "ERROR: Invalid JSON syntax in $MARKETPLACE_FILE"
+            python3 -c "import json, sys; json.load(open('$MARKETPLACE_FILE'))"
+            exit 1
+          fi
+
+          # Validate required fields
+          python3 -c "
+          import json, sys
+
+          with open('$MARKETPLACE_FILE') as f:
+              data = json.load(f)
+
+          errors = []
+
+          if 'name' not in data:
+              errors.append('Missing required field: name')
+          if 'owner' not in data:
+              errors.append('Missing required field: owner')
+          elif not isinstance(data['owner'], dict) or 'name' not in data['owner']:
+              errors.append('owner.name is required')
+          if 'plugins' not in data:
+              errors.append('Missing required field: plugins')
+          elif not isinstance(data['plugins'], list):
+              errors.append('plugins must be an array')
+          else:
+              for i, plugin in enumerate(data['plugins']):
+                  if 'name' not in plugin:
+                      errors.append(f'plugins[{i}]: missing required field \"name\"')
+                  if 'source' not in plugin:
+                      errors.append(f'plugins[{i}]: missing required field \"source\"')
+
+          if errors:
+              for e in errors:
+                  print(f'ERROR: {e}', file=sys.stderr)
+              sys.exit(1)
+
+          print(f'Validation passed: {len(data[\"plugins\"])} plugin(s) found')
+          print(f'Marketplace name: {data[\"name\"]}')
+          print(f'Owner: {data[\"owner\"][\"name\"]}')
+          "
+
+      - name: Validate plugin sources
+        run: |
+          python3 -c "
+          import json, os, sys
+
+          with open('.claude-plugin/marketplace.json') as f:
+              data = json.load(f)
+
+          plugin_root = data.get('metadata', {}).get('pluginRoot', '.')
+          errors = []
+
+          for i, plugin in enumerate(data.get('plugins', [])):
+              source = plugin.get('source')
+              if isinstance(source, str) and source.startswith('./'):
+                  plugin_path = os.path.normpath(os.path.join(plugin_root, source))
+                  if not os.path.isdir(plugin_path):
+                      errors.append(f'plugins[{i}] \"{plugin[\"name\"]}\": source path \"{source}\" not found (resolved to \"{plugin_path}\")')
+
+          if errors:
+              for e in errors:
+                  print(f'WARNING: {e}', file=sys.stderr)
+              # Warnings only, don't fail
+              print(f'Found {len(errors)} warning(s)')
+          else:
+              print('All plugin source paths are valid')
+          "

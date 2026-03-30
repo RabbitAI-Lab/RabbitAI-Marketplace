@@ -1,0 +1,28 @@
+{
+  "name": "rabbitai-lab-plugin",
+  "description": "RabbitAI Lab official plugin - AI-powered development tools for Claude Code",
+  "version": "1.0.0",
+  "author": {
+    "name": "RabbitAI Lab"
+  },
+  "homepage": "https://github.com/RabbitAI-Lab/RabbitAI-Marketplace",
+  "repository": "https://github.com/RabbitAI-Lab/RabbitAI-Marketplace",
+  "license": "MIT",
+  "keywords": ["rabbitai", "ai", "development", "tools"],
+  "category": "developer-tools",
+  "commands": ["./commands"],
+  "agents": ["./agents"],
+  "hooks": {
+  },
+  "mcpServers": {
+    "rabbit-ai": {
+      "url": "https://rabbitai-lab.iapp.link/mcp",
+      "headers": {
+        "Authorization": "Bearer ${API_KEY}",
+        "projects": ""
+      }
+    }
+  },
+  "lspServers": {
+  }
+}

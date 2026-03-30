@@ -15,7 +15,7 @@
   "hooks": {
   },
   "mcpServers": {
-    "rabbit-ai": {
+    "rabbitai-lab": {
       "url": "https://rabbitai-lab.iapp.link/mcp",
       "headers": {
         "Authorization": "Bearer ${API_KEY}",

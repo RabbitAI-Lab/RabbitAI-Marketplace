@@ -8,21 +8,5 @@
   "homepage": "https://github.com/RabbitAI-Lab/RabbitAI-Marketplace",
   "repository": "https://github.com/RabbitAI-Lab/RabbitAI-Marketplace",
   "license": "MIT",
-  "keywords": ["rabbitai", "ai", "development", "tools"],
-  "category": "developer-tools",
-  "commands": [],
-  "agents": [],
-  "hooks": {
-  },
-  "mcpServers": {
-    "rabbitai-lab": {
-      "url": "https://rabbitai-lab.iapp.link/mcp",
-      "headers": {
-        "Authorization": "Bearer ${API_KEY}",
-        "projects": ""
-      }
-    }
-  },
-  "lspServers": {
-  }
+  "keywords": ["rabbitai", "ai", "development", "tools"]
 }
